@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import { Analytics } from "@vercel/analytics/next"
 import type { Viewport } from 'next'
 
 export const viewport: Viewport = {
@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 
 //Enhanced metadata for TS Arina
 export const metadata: Metadata = {
-  metadataBase: new URL("https://typescriptarina.vercel.app"),
+  metadataBase: new URL(process.env.BASE_URL!),
   title: "TS Arina | Your TypeScript Playground",
   description:
     "Welcome to TS Arina, the best online typescript playground where developers can write, run, and test TypeScript and JavaScript code. Experiment with code snippets and see real-time results.",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     title: "TS Arina | Your TypeScript Playground",
     description:
       "Welcome to TS Arina, where developers write, run, and test TypeScript and JavaScript code.",
-    url: "https://typescriptarina.vercel.app",
+    url: process.env.BASE_URL,
     siteName: "TS Arina",
   },
   authors: [{ name: "Akshit Lakhanpal", url: "https://github.com/akshitworkspace" }],
@@ -45,7 +45,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   name: "TS Arina",
-  url: "https://typescriptarina.vercel.app",
+  url: process.env.BASE_URL,
   description:
     "TS Arina is an online playground for TypeScript and JavaScript developers to write, run, and test code snippets in real-time.",
   logo: "/images/og-image.png",
@@ -60,7 +60,7 @@ const jsonLd = {
     "@type": "Offer",
     priceCurrency: "USD",
     price: "0.00",
-    url: "https://yourtypescriptplayground.com",
+    url: process.env.BASE_URL,
   },
 };
 
@@ -82,6 +82,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );

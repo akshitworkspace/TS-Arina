@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
+
 const developerNote = `
   -----------------------------------------------
   Developed by: Akshit Lakhanpal
@@ -11,17 +12,18 @@ const developerNote = `
 
 const ConsolePanel = () => {
     const [logs, setLogs] = useState<string[]>([]);
-
     useEffect(() => {
         const originalLog = console.log;
-        console.log = (message: string) => {
-            const newLog = message === developerNote ? "" : message
-            setLogs((prevLogs) => [...prevLogs, newLog]);
+        console.log = (...args) => {
+            //If the first argument matches developerNote, we filter it out, otherwise log everything
+            const newArgs = args.map((arg) => (arg === developerNote ? "" : arg));
+            setLogs((prevLogs) => [...prevLogs, ...newArgs]);
         };
+
         originalLog(developerNote);
 
         return () => {
-            console.log = originalLog; //Restore original console.log when the component unmounts
+            console.log = originalLog;
         };
     }, []);
 
