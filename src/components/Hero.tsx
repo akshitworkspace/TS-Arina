@@ -35,8 +35,9 @@ console.log("Hello, world!");
 
             const compiledCode = ts.transpile(code);
             new Function(compiledCode)(); //code execution
-        } catch (error: any) {
-            setLogs(prev => [...prev, `RUNTIME ERROR: ${error.message}`]);
+        } catch (error: unknown) {
+            const err = error as Error;
+            setLogs(prev => [...prev, `RUNTIME ERROR: ${err?.message}`]);
         } finally {
             console.log = originalLog;
             console.error = originalError;
