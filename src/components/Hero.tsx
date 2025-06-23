@@ -1,10 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as ts from "typescript";
 import MonacoEditorComponent from "./MonacoEditor";
 import ConsolePanel from "./ConsolePanel";
 import { logger } from "@/utils/logger";
 import CONSTANTS from "@/utils/constants";
+import play from "@/assets/play.svg";
+import copy from "@/assets/copy.svg";
+import clean from "@/assets/clean.svg";
+import ButtonPrimary from "./ButtonPrimary";
 
 const Hero = () => {
     const [code, setCode] = useState<string>(`//Write your TypeScript code here
@@ -36,6 +40,10 @@ console.log("Hello, world!");
         }
     };
 
+    const copyLogs = useCallback(() => {
+        navigator.clipboard.writeText(logs.join('\n'))
+    }, [logs]);
+
     useEffect(() => {
         console.log(CONSTANTS.devNote);
     }, []);
@@ -50,28 +58,22 @@ console.log("Hello, world!");
             {/*Console Section (30%) */}
             <div className="w-full md:w-[35%] h-1/2 md:h-full bg-gray-900 flex flex-col">
                 {/*Console Header (compact with round buttons) */}
-                <div className="flex justify-start items-center p-2 bg- space-x-2">
-                    <button
+                <div className="flex justify-end items-center p-2 bg- space-x-2">
+                    <ButtonPrimary
                         onClick={runCode}
-                        className="w-8 h-8 cursor-pointer bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600"
-                        title="Run Code"
-                    >
-                        {/*Example: <img src="/icons/run.svg" alt="Run" className="w-4 h-4" /> */}
-                    </button>
-                    <button
+                        src={play}
+                        className="bg-green-500 hover:bg-green-600"
+                    />
+                    <ButtonPrimary
                         onClick={() => setLogs([])}
-                        className="w-8 h-8 cursor-pointer bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300"
-                        title="Clear Logs"
-                    >
-                        {/*Example: <img src="/icons/clear.svg" alt="Clear" className="w-4 h-4" /> */}
-                    </button>
-                    <button
-                        onClick={() => navigator.clipboard.writeText(logs.join('\n'))}
-                        className="w-8 h-8 cursor-pointer bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300"
-                        title="Copy Logs"
-                    >
-                        {/*Example: <img src="/icons/copy.svg" alt="Copy" className="w-4 h-4" /> */}
-                    </button>
+                        src={clean}
+                        className="bg-gray-200 hover:bg-gray-300"
+                    />
+                    <ButtonPrimary
+                        onClick={copyLogs}
+                        src={copy}
+                        className="bg-gray-200 hover:bg-gray-300"
+                    />
                 </div>
 
                 {/*Console Output */}
