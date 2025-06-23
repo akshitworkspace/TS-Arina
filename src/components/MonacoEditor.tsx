@@ -18,7 +18,7 @@ const MonacoEditorComponent = ({ value, onChange }: MonacoEditorProps) => {
     };
 
     return (
-        <div className="w-2/3 h-full">
+        <div className="h-auto w-auto">
             <MonacoEditor
                 height="100vh"
                 language="typescript"
@@ -28,6 +28,7 @@ const MonacoEditorComponent = ({ value, onChange }: MonacoEditorProps) => {
                 options={{
                     selectOnLineNumbers: true,
                     automaticLayout: true,
+                    wordWrap: "on",
                     fontSize: 18,
                     lineHeight: 1.6,
                 }}

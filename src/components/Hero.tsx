@@ -41,17 +41,47 @@ console.log("Hello, world!");
     }, []);
 
     return (
-        <div className="flex h-screen">
-            <MonacoEditorComponent value={code} onChange={setCode} />
-            <ConsolePanel logs={logs} />
+        <div className="flex flex-col md:flex-row h-screen">
+            {/*Code Editor Section (70%) */}
+            <div className="w-full md:w-[65%] h-1/2 md:h-full">
+                <MonacoEditorComponent value={code} onChange={setCode} />
+            </div>
 
-            <div
-                className="absolute top-4 right-4 bg-black text-white p-3 rounded-md cursor-pointer"
-                onClick={runCode}
-            >
-                Run Code
+            {/*Console Section (30%) */}
+            <div className="w-full md:w-[35%] h-1/2 md:h-full bg-gray-900 flex flex-col">
+                {/*Console Header (compact with round buttons) */}
+                <div className="flex justify-start items-center p-2 bg- space-x-2">
+                    <button
+                        onClick={runCode}
+                        className="w-8 h-8 cursor-pointer bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600"
+                        title="Run Code"
+                    >
+                        {/*Example: <img src="/icons/run.svg" alt="Run" className="w-4 h-4" /> */}
+                    </button>
+                    <button
+                        onClick={() => setLogs([])}
+                        className="w-8 h-8 cursor-pointer bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300"
+                        title="Clear Logs"
+                    >
+                        {/*Example: <img src="/icons/clear.svg" alt="Clear" className="w-4 h-4" /> */}
+                    </button>
+                    <button
+                        onClick={() => navigator.clipboard.writeText(logs.join('\n'))}
+                        className="w-8 h-8 cursor-pointer bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300"
+                        title="Copy Logs"
+                    >
+                        {/*Example: <img src="/icons/copy.svg" alt="Copy" className="w-4 h-4" /> */}
+                    </button>
+                </div>
+
+                {/*Console Output */}
+                <div className="flex-1 overflow-auto text-white font-mono text-sm">
+                    <ConsolePanel logs={logs} />
+                </div>
             </div>
         </div>
+
+
     );
 };
 
