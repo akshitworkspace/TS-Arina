@@ -49,40 +49,28 @@ console.log("Hello, world!");
     }, []);
 
     return (
-        <div className="flex flex-col md:flex-row h-screen">
-            {/*Code Editor Section (70%) */}
-            <div className="w-full md:w-[65%] h-1/2 md:h-full">
+        <div className="flex flex-col md:flex-row w-full h-dvh">
+            {/* Code Editor Section (65%) */}
+            <div className="w-full md:basis-[65%] md:flex-none max-h-full min-h-2/3">
                 <MonacoEditorComponent value={code} onChange={setCode} />
             </div>
 
-            {/*Console Section (30%) */}
-            <div className="w-full md:w-[35%] h-1/2 md:h-full bg-gray-900 flex flex-col">
-                {/*Console Header (compact with round buttons) */}
-                <div className="flex justify-end items-center p-2 bg- space-x-2">
-                    <ButtonPrimary
-                        onClick={runCode}
-                        src={play}
-                        className="bg-green-500 hover:bg-green-600"
-                    />
-                    <ButtonPrimary
-                        onClick={() => setLogs([])}
-                        src={clean}
-                        className="bg-gray-200 hover:bg-gray-300"
-                    />
-                    <ButtonPrimary
-                        onClick={copyLogs}
-                        src={copy}
-                        className="bg-gray-200 hover:bg-gray-300"
-                    />
+            {/* Console Section (35%) */}
+            <div className="w-full md:basis-[35%] md:flex-none max-h-full min-h-1/3 bg-gray-900 flex flex-col">
+                {/* Console Header */}
+                <div className="flex justify-end items-center p-2 space-x-2">
+                    <span className="mr-auto font-bold">Console</span>
+                    <ButtonPrimary onClick={runCode} src={play} className="bg-green-500 hover:bg-green-600" />
+                    <ButtonPrimary onClick={() => setLogs([])} src={clean} className="bg-gray-200 hover:bg-gray-300" />
+                    <ButtonPrimary onClick={copyLogs} src={copy} className="bg-gray-200 hover:bg-gray-300" />
                 </div>
 
-                {/*Console Output */}
+                {/* Console Output */}
                 <div className="flex-1 overflow-auto text-white font-mono text-sm">
                     <ConsolePanel logs={logs} />
                 </div>
             </div>
         </div>
-
 
     );
 };

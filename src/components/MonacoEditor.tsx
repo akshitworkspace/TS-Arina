@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import MonacoEditor from "@monaco-editor/react";
 
 interface MonacoEditorProps {
@@ -8,29 +7,27 @@ interface MonacoEditorProps {
 }
 
 const MonacoEditorComponent = ({ value, onChange }: MonacoEditorProps) => {
-    const [editorValue, setEditorValue] = useState(value);
-
     const handleEditorChange = (newValue: string | undefined) => {
-        if (newValue) {
-            setEditorValue(newValue);
+        if (typeof newValue === "string") {
             onChange(newValue);
         }
     };
 
     return (
-        <div className="h-auto w-auto">
+        <div className="h-full w-full">
             <MonacoEditor
-                height="100vh"
                 language="typescript"
-                value={editorValue}
+                value={value}
                 onChange={handleEditorChange}
-                theme='vs-dark'
+                theme="vs-dark"
                 options={{
                     selectOnLineNumbers: true,
                     automaticLayout: true,
                     wordWrap: "on",
                     fontSize: 18,
-                    lineHeight: 1.6,
+                    lineHeight: 24,
+                    minimap: { enabled: true },
+                    scrollBeyondLastLine: false,
                 }}
             />
         </div>
