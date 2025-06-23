@@ -3,14 +3,8 @@ import { useEffect, useState } from "react";
 import * as ts from "typescript";
 import MonacoEditorComponent from "./MonacoEditor";
 import ConsolePanel from "./ConsolePanel";
-
-const developerNote = `
-  -----------------------------------------------
-  Developed by: Akshit Lakhanpal
-  Open for contribution! Feel free to fork and contribute.
-  GitHub: https://github.com/akshitworkspace
-  -----------------------------------------------
-`;
+import { logger } from "@/utils/logger";
+import CONSTANTS from "@/utils/constants";
 
 const Hero = () => {
     const [code, setCode] = useState<string>(`//Write your TypeScript code here
@@ -27,10 +21,8 @@ console.log("Hello, world!");
         try {
             //Capture logs for this run only
             console.log = (...args) => {
-                const logStrs = args.map(arg =>
-                    typeof arg === "string" ? arg : JSON.stringify(arg)
-                );
-                setLogs(prev => [...prev, ...logStrs]);
+                const logStrs = args.map(arg => logger(arg)).join(',');
+                setLogs(prev => [...prev, logStrs]);
             };
 
             const compiledCode = ts.transpile(code);
@@ -44,9 +36,9 @@ console.log("Hello, world!");
         }
     };
 
-    useEffect(()=>{
-        console.log(developerNote);
-    },[]);
+    useEffect(() => {
+        console.log(CONSTANTS.devNote);
+    }, []);
 
     return (
         <div className="flex h-screen">
