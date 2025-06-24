@@ -46,22 +46,16 @@ const jsonLd = {
   "@type": "WebApplication",
   name: "TS Arina",
   url: process.env.BASE_URL,
-  description:
-    "TS Arina is an online playground for TypeScript and JavaScript developers to write, run, and test code snippets in real-time.",
-  logo: "/images/og-image.png",
+  description: "TS Arina is an online playground for TypeScript and JavaScript developers to write, run, and test code snippets in real-time.",
   author: {
     "@type": "Person",
     name: "Akshit Lakhanpal",
+    url: "https://github.com/akshitworkspace"
   },
   applicationCategory: "Developer Tools",
-  operatingSystem: "Web",
+  operatingSystem: "Windows, macOS, Linux",
   softwareVersion: "1.0",
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "USD",
-    price: "0.00",
-    url: process.env.BASE_URL,
-  },
+  keywords: "TypeScript, JavaScript, Playground, Online Code Editor, TS Playground, Run TypeScript Online, Test TypeScript Code",
 };
 
 export default function RootLayout({
