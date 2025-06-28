@@ -19,7 +19,7 @@ console.log("Hello, world!");
     const [logs, setLogs] = useState<string[]>([]);
 
     const runCode = () => {
-        setLogs([]); //Clear console before new run
+        setLogs([]);
         try {
             const compiledCode = ts.transpile(code);
             new Function(compiledCode)(); //code execution
