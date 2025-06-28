@@ -10,6 +10,8 @@ import copy from "@/assets/copy.svg";
 import clean from "@/assets/clean.svg";
 import ButtonPrimary from "./ButtonPrimary";
 
+const originalLog = console.log;
+
 const Hero = () => {
     const [code, setCode] = useState<string>(`//Write your TypeScript code here
 console.log("Hello, world!");
@@ -18,25 +20,12 @@ console.log("Hello, world!");
 
     const runCode = () => {
         setLogs([]); //Clear console before new run
-
-        const originalLog = console.log;
-        const originalError = console.error;
-
         try {
-            //Capture logs for this run only
-            console.log = (...args) => {
-                const logStrs = args.map(arg => logger(arg)).join(',');
-                setLogs(prev => [...prev, logStrs]);
-            };
-
             const compiledCode = ts.transpile(code);
             new Function(compiledCode)(); //code execution
         } catch (error: unknown) {
             const err = error as Error;
             setLogs(prev => [...prev, `RUNTIME ERROR: ${err?.message}`]);
-        } finally {
-            console.log = originalLog;
-            console.error = originalError;
         }
     };
 
@@ -46,6 +35,13 @@ console.log("Hello, world!");
 
     useEffect(() => {
         console.log(CONSTANTS.devNote);
+        console.log = (...args) => {
+            const logStrs = args.map(arg => logger(arg)).join(' ');
+            setLogs(prev => [...prev, logStrs]);
+        };
+        return () => {
+            console.log = originalLog;
+        }
     }, []);
 
     return (
@@ -58,7 +54,7 @@ console.log("Hello, world!");
             {/* Console Section (35%) */}
             <div className="w-full md:basis-[35%] md:flex-none max-h-full min-h-1/3 bg-gray-900 flex flex-col">
                 {/* Console Header */}
-                <div className="flex justify-end items-center p-2 space-x-2">
+                <div className="flex justify-end items-center p-2 space-x-2 select-none">
                     <span className="mr-auto font-bold">Console</span>
                     <ButtonPrimary onClick={runCode} src={play} className="bg-green-500 hover:bg-green-600" />
                     <ButtonPrimary onClick={() => setLogs([])} src={clean} className="bg-gray-200 hover:bg-gray-300" />
