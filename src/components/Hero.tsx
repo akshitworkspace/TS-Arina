@@ -14,7 +14,7 @@ const originalLog = console.log;
 
 const Hero = () => {
     const [code, setCode] = useState<string>(`//Write your TypeScript code here
-console.log("Hello, world!");
+console.log("Namaste, world!");
 `);
     const [logs, setLogs] = useState<string[]>([]);
 
